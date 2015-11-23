@@ -54,6 +54,7 @@
 			_hls.addEventListener(HLSEvent.MANIFEST_LOADED,_manifestHandler);
 			_hls.addEventListener(HLSEvent.MEDIA_TIME,_mediaTimeHandler);
 			_hls.addEventListener(HLSEvent.PLAYBACK_STATE,_stateHandler);
+			_hls.addEventListener(HLSEvent.FRAGMENT_PLAYING,_handleFragment);
 			_hls.stream.soundTransform = new SoundTransform(_volume);
 			_video.attachNetStream(_hls.stream);
 		}
@@ -67,6 +68,10 @@
 
 		private function _errorHandler(event:HLSEvent):void {
 			_element.logMessage(event.toString());
+		};
+		
+		private function _handleFragment(event:HLSEvent):void {
+			sendEvent(HtmlMediaEvent.FRAGMENT_PLAYING);
 		};
 
 		private function _manifestHandler(event:HLSEvent):void {
